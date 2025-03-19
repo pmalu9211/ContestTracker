@@ -13,7 +13,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         startTime: new Date(contest.startTime),
         endTime: new Date(contest.endTime),
         url: contest.url,
-        duration: contest.duration,
+        duration: contest.site.toUpperCase() === "LEETCODE" ? 5400000 : contest.duration, // 1.5 hours for Leetcode
         status: determineContestStatus(contest.startTime, contest.endTime)
       }));
 
