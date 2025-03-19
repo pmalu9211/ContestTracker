@@ -29,9 +29,7 @@ export default function Home() {
   const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>(["LEETCODE", "CODECHEF", "CODEFORCES"]);
   const [statusFilter, setStatusFilter] = useState<ContestStatus | "ALL">("ALL");
   const [sortBy, setSortBy] = useState<string>("time");
-  const [isDark, setIsDark] = useState(
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  );
+  const [isDark, setIsDark] = useState(false);
 
   const { data: contests, isLoading } = useQuery<Contest[]>({
     queryKey: ["/api/contests"],
@@ -57,7 +55,7 @@ export default function Home() {
       <div className="container mx-auto p-4 space-y-8">
         <div className="flex justify-between items-center">
           <div className="space-y-2">
-            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-emerald-500 to-emerald-700 dark:from-emerald-400 dark:to-emerald-600 bg-clip-text text-transparent">
               Competitive Programming Contests
             </h1>
             <p className="text-muted-foreground">
@@ -65,10 +63,10 @@ export default function Home() {
             </p>
           </div>
           <Button
-            variant="ghost"
+            variant="outline"
             size="icon"
             onClick={toggleTheme}
-            className="rounded-full"
+            className="rounded-full border-2 border-emerald-500/20 hover:border-emerald-500/40 transition-all duration-300"
           >
             {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </Button>
@@ -86,7 +84,7 @@ export default function Home() {
                 value={statusFilter}
                 onValueChange={(value) => setStatusFilter(value as ContestStatus | "ALL")}
               >
-                <SelectTrigger className="w-[140px]">
+                <SelectTrigger className="w-[140px] bg-white dark:bg-gray-900 border-2 border-emerald-500/20">
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -101,7 +99,7 @@ export default function Home() {
                 value={sortBy}
                 onValueChange={setSortBy}
               >
-                <SelectTrigger className="w-[140px]">
+                <SelectTrigger className="w-[140px] bg-white dark:bg-gray-900 border-2 border-emerald-500/20">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
