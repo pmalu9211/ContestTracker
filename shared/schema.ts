@@ -10,11 +10,22 @@ export const contests = pgTable("contests", {
   endTime: timestamp("end_time").notNull(),
   url: text("url").notNull(),
   status: text("status").notNull(), // UPCOMING, ONGOING, FINISHED
+  duration: text("duration").notNull() // Added duration field
 });
 
 export const insertContestSchema = createInsertSchema(contests).omit({ id: true });
 
-export type Contest = typeof contests.$inferSelect;
+export interface Contest {
+  id: string;
+  name: string;
+  platform: Platform;
+  startTime: Date;
+  endTime: Date;
+  url: string;
+  duration: number;
+  status: ContestStatus;
+}
+
 export type InsertContest = z.infer<typeof insertContestSchema>;
 
 export const platformEnum = z.enum(["LEETCODE", "CODECHEF", "CODEFORCES"]);
