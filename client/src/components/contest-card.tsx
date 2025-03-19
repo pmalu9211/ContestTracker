@@ -26,7 +26,7 @@ export function ContestCard({ contest }: ContestCardProps) {
   }, [contest.startTime]);
 
   return (
-    <Card className="w-full h-full dark:bg-gray-800 bg-white shadow-sm hover:shadow-md transition-all duration-300 border dark:border-gray-700 border-gray-200">
+    <Card className="w-full h-full bg-white shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="flex items-center space-x-2">
           <div className="relative">
@@ -35,7 +35,7 @@ export function ContestCard({ contest }: ContestCardProps) {
               style={{ color: PLATFORM_COLORS[contest.platform as keyof typeof PLATFORM_COLORS] }}
             />
             <motion.div
-              className="absolute -inset-1 rounded-full dark:bg-gray-700 bg-gray-100"
+              className="absolute -inset-1 rounded-full bg-gray-100"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.5, 0.2, 0.5],
@@ -46,15 +46,15 @@ export function ContestCard({ contest }: ContestCardProps) {
               }}
             />
           </div>
-          <h3 className="font-semibold text-lg line-clamp-1 dark:text-white text-gray-900">{contest.name}</h3>
+          <h3 className="font-semibold text-lg line-clamp-1 text-gray-900">{contest.name}</h3>
         </div>
         <Badge 
           variant={contest.status === "UPCOMING" ? "outline" : 
                  contest.status === "ONGOING" ? "default" : "secondary"}
           className={`animate-in fade-in duration-300 ${
-            contest.status === "UPCOMING" ? "border-blue-500 text-blue-700 dark:text-blue-400" :
+            contest.status === "UPCOMING" ? "border-blue-500 text-blue-700" :
             contest.status === "ONGOING" ? "bg-green-500" :
-            "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+            "bg-gray-200 text-gray-700"
           }`}
         >
           {contest.status}
@@ -62,23 +62,23 @@ export function ContestCard({ contest }: ContestCardProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div className="flex items-center space-x-2 text-sm dark:text-gray-300 text-gray-600">
+          <div className="flex items-center space-x-2 text-sm text-gray-600">
             <Clock className="h-4 w-4" />
             <span>{formatContestTime(contest.startTime)}</span>
           </div>
-          <div className="text-sm dark:text-gray-300 text-gray-600">
+          <div className="text-sm text-gray-600">
             Duration: {getContestDuration(contest.startTime, contest.endTime)}
           </div>
-          <div className="text-sm font-medium dark:text-blue-400 text-blue-600">
+          <div className="text-sm font-medium text-blue-600">
             {timeLeft}
           </div>
           <div className="flex gap-2">
             <Button 
               variant="outline" 
-              className="flex-1 group dark:border-gray-700 dark:hover:border-gray-600 border-gray-200 hover:border-gray-300 dark:bg-gray-800 bg-white"
+              className="flex-1 group border-gray-200 hover:border-gray-300 bg-white"
               onClick={() => window.open(contest.url, "_blank")}
             >
-              <ExternalLink className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform dark:text-gray-300 text-gray-600" />
+              <ExternalLink className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform text-gray-600" />
               Join Contest
             </Button>
             <TooltipProvider>
@@ -87,10 +87,10 @@ export function ContestCard({ contest }: ContestCardProps) {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="dark:border-gray-700 dark:hover:border-gray-600 border-gray-200 hover:border-gray-300 dark:bg-gray-800 bg-white"
+                    className="border-gray-200 hover:border-gray-300 bg-white"
                     onClick={() => window.open(generateGoogleCalendarUrl(contest), "_blank")}
                   >
-                    <Calendar className="h-4 w-4 hover:scale-110 transition-transform dark:text-gray-300 text-gray-600" />
+                    <Calendar className="h-4 w-4 hover:scale-110 transition-transform text-gray-600" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>

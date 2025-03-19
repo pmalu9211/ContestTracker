@@ -57,17 +57,8 @@ export function sortContests(contests: Contest[], sortBy: string) {
       case "platform":
         return a.platform.localeCompare(b.platform);
       case "duration":
-        const aDuration = new Date(a.endTime).getTime() - new Date(a.startTime).getTime();
-        const bDuration = new Date(b.endTime).getTime() - new Date(b.startTime).getTime();
-        return bDuration - aDuration;
+        return b.duration - a.duration;
       case "time":
-        return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
-      case "default":
-        // Sort by status first (ONGOING > UPCOMING > FINISHED), then by start time
-        const statusPriority = { "ONGOING": 0, "UPCOMING": 1, "FINISHED": 2 };
-        const statusDiff = statusPriority[a.status] - statusPriority[b.status];
-        if (statusDiff !== 0) return statusDiff;
-        return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
       default:
         return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
     }
