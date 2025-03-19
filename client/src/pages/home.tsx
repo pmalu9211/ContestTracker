@@ -28,7 +28,7 @@ const item = {
 export default function Home() {
   const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>(["LEETCODE", "CODECHEF", "CODEFORCES"]);
   const [statusFilter, setStatusFilter] = useState<ContestStatus | "ALL">("ALL");
-  const [sortBy, setSortBy] = useState<string>("time");
+  const [sortBy, setSortBy] = useState<string>("default");
   const [isDark, setIsDark] = useState(false);
 
   const { data: contests, isLoading } = useQuery<Contest[]>({
@@ -38,6 +38,7 @@ export default function Home() {
   const toggleTheme = () => {
     setIsDark(!isDark);
     document.documentElement.classList.toggle("dark");
+    document.body.classList.toggle("dark");
   };
 
   const filteredContests = contests
@@ -51,14 +52,14 @@ export default function Home() {
     : [];
 
   return (
-    <div className={`min-h-screen bg-gray-50 ${isDark ? 'dark' : ''}`}>
+    <div className={`min-h-screen ${isDark ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
       <div className="container mx-auto p-4 space-y-8">
         <div className="flex justify-between items-center">
           <div className="space-y-2">
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
+            <h1 className={`text-3xl sm:text-4xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Competitive Programming Contests
             </h1>
-            <p className="text-gray-600">
+            <p className={isDark ? 'text-gray-300' : 'text-gray-600'}>
               Track upcoming programming contests across multiple platforms
             </p>
           </div>
@@ -66,9 +67,9 @@ export default function Home() {
             variant="outline"
             size="icon"
             onClick={toggleTheme}
-            className="rounded-full border border-gray-200"
+            className={`rounded-full ${isDark ? 'border-gray-700 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'}`}
           >
-            {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            {isDark ? <Sun className="h-5 w-5 text-white" /> : <Moon className="h-5 w-5" />}
           </Button>
         </div>
 
@@ -84,7 +85,7 @@ export default function Home() {
                 value={statusFilter}
                 onValueChange={(value) => setStatusFilter(value as ContestStatus | "ALL")}
               >
-                <SelectTrigger className="w-[140px] bg-white border-gray-200">
+                <SelectTrigger className={`w-[140px] ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -99,10 +100,11 @@ export default function Home() {
                 value={sortBy}
                 onValueChange={setSortBy}
               >
-                <SelectTrigger className="w-[140px] bg-white border-gray-200">
+                <SelectTrigger className={`w-[140px] ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="default">Default</SelectItem>
                   <SelectItem value="time">Start Time</SelectItem>
                   <SelectItem value="platform">Platform</SelectItem>
                   <SelectItem value="duration">Duration</SelectItem>
@@ -122,7 +124,7 @@ export default function Home() {
                 <Skeleton key={i} className="h-[200px] w-full" />
               ))
             ) : filteredContests.length === 0 ? (
-              <div className="col-span-full text-center py-8 text-gray-500">
+              <div className={`col-span-full text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                 No contests found matching your filters
               </div>
             ) : (
